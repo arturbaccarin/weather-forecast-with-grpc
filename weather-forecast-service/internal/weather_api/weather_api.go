@@ -6,9 +6,8 @@ import (
 	"net/http"
 )
 
-const WEATHER_API_URL = "http://api.weatherapi.com/v1/current.json"
-
 type WeatherAPI struct {
+	URL string
 	Key string
 }
 
@@ -21,7 +20,7 @@ func NewWeatherAPI(key string) *WeatherAPI {
 func (w WeatherAPI) SearchForCity(city string) {
 	endpoint := "%s?key=%s&q=%s&aqi=no"
 
-	url := fmt.Sprintf(endpoint, WEATHER_API_URL, w.Key, city)
+	url := fmt.Sprintf(endpoint, w.URL, w.Key, city)
 	println(url)
 
 	request, err := http.NewRequest("GET", url, nil)
