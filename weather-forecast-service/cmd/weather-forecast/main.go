@@ -6,11 +6,9 @@ import (
 )
 
 func main() {
-	println("start project")
-
 	config := config.Load()
 
-	weatherAPI := weatherapi.NewWeatherAPI(config.WeatherAPIKey)
+	weatherAPI := weatherapi.NewWeatherAPI(config.WeatherAPIURL, config.WeatherAPIKey)
 
 	weatherAPI.SearchForCity("London")
 

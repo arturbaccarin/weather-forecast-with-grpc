@@ -1,8 +1,10 @@
 package weatherapi
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -11,8 +13,9 @@ type WeatherAPI struct {
 	Key string
 }
 
-func NewWeatherAPI(key string) *WeatherAPI {
+func NewWeatherAPI(url, key string) *WeatherAPI {
 	return &WeatherAPI{
+		URL: url,
 		Key: key,
 	}
 }
@@ -37,7 +40,20 @@ func (w WeatherAPI) SearchForCity(city string) {
 	}
 	defer response.Body.Close()
 
-	responseBody, _ := io.ReadAll(response.Body)
+	body, _ := io.ReadAll(response.Body)
 
-	println(string(responseBody))
+	var weatherResponse WeatherAPIResponse
+
+	err = json.Unmarshal(body, &weatherResponse)
+	if err != nil {
+		log.Fatalf("Error unmarshalling JSON: %v", err)
+	}
+
+	dto := WeatherOutputDTO{
+		Name:               weatherResponse.Location.Name,
+		Condition:          weatherResponse.Current.Condition.Text,
+		TemperatureCelsius: weatherResponse.Current.TemperatureC,
+	}
+
+	fmt.Println(dto)
 }
