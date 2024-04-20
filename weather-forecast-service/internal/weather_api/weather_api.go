@@ -24,11 +24,10 @@ func (w WeatherAPI) SearchForCity(city string) {
 	endpoint := "%s?key=%s&q=%s&aqi=no"
 
 	url := fmt.Sprintf(endpoint, w.URL, w.Key, city)
-	println(url)
 
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println("error: " + err.Error())
 	}
 
 	request.Header.Set("Content-Type", "application/json; charset=utf-8")
@@ -36,7 +35,7 @@ func (w WeatherAPI) SearchForCity(city string) {
 	client := &http.Client{}
 	response, err := client.Do(request)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println("error: " + err.Error())
 	}
 	defer response.Body.Close()
 
