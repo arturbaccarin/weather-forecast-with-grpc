@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option go_package = "./pb";
+
+service Weather {
+    rpc GetWeather (WeatherRequest) returns (WeatherResponse) {}
+}
+
+message WeatherRequest {
+    string city = 1;
+}
+
+message WeatherResponse {
+    string locatTime = 1;
+}
