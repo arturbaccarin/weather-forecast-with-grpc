@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "weather-forecast-service"
+		},
+		{
+			"path": "weather-forecast-client"
 		}
 	],
 	"settings": {}
